@@ -33,9 +33,18 @@ public class UserService implements IUserService {
         if (currentData == null) {
             return null;
         }
-        currentData.setName(request.getName());
-        currentData.setNim(request.getNim());
-        currentData.setProdi(request.getProdi());
+
+        if (request.getName() != null) {
+            currentData.setName(request.getName());
+        }
+
+        if (request.getNim() != null) {
+            currentData.setNim(request.getNim());
+        }
+
+        if (request.getProdi() != null) {
+            currentData.setProdi(request.getProdi());
+        }
 //        db.put(currentData.getId(), currentData);
         repository.save(currentData);
         return currentData;
