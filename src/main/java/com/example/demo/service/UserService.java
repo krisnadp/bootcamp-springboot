@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.common.dto.user.UpdateUserRequest;
-import com.example.demo.intergaces.IUserService;
+import com.example.demo.interfaces.IUserService;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

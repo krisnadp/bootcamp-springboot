@@ -1,4 +1,4 @@
-package com.example.demo.intergaces;
+package com.example.demo.interfaces;
 
 import com.example.demo.common.dto.user.UpdateUserRequest;
 import com.example.demo.model.User;
@@ -12,7 +12,9 @@ public interface IUserService {
     User updateUser(int id, UpdateUserRequest request);
 
     boolean deleteUser(int id);
+
     List<User> getUsers();
+
     User getUser(int id);
 
 }
