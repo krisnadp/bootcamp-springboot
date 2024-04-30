@@ -7,14 +7,13 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 
 @Service
 public class UserService implements IUserService {
 
-    private final Map<Integer, User> db = new HashMap<>();
+    //    private final Map<Integer, User> db = new HashMap<>();
     @Autowired
     private UserRepository repository;
 
@@ -37,7 +36,8 @@ public class UserService implements IUserService {
         currentData.setName(request.getName());
         currentData.setNim(request.getNim());
         currentData.setProdi(request.getProdi());
-        db.put(currentData.getId(), currentData);
+//        db.put(currentData.getId(), currentData);
+        repository.save(currentData);
         return currentData;
     }
 
@@ -58,8 +58,7 @@ public class UserService implements IUserService {
     public List<User> getUsers() {
 //        List<User> result = new ArrayList<User>();
 //        result.addAll(db.values());
-        List<User> result = repository.findAll();
-        return result;
+        return repository.findAll();
     }
 
     @Override
