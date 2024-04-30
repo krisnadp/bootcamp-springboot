@@ -1,25 +1,10 @@
-package com.example.demo.model;
+package com.example.demo.common.dto.user;
 
-import jakarta.persistence.*;
+public class UpdateUserRequest {
 
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
     private String name;
-    @Column(unique = true)
     private String nim;
     private String prodi;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        id = id;
-    }
 
     public String getName() {
         return name;
@@ -44,5 +29,4 @@ public class User {
     public void setProdi(String prodi) {
         this.prodi = prodi;
     }
-
 }

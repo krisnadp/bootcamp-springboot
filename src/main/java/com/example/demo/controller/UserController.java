@@ -1,58 +1,50 @@
 package com.example.demo.controller;
 
+import com.example.demo.common.dto.user.UpdateUserRequest;
+import com.example.demo.intergaces.IUserService;
 import com.example.demo.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/user")
 public class UserController {
 
-    private final Map<Integer, User> db = new HashMap<>();
+    @Autowired
+    private IUserService service;
 
-    @GetMapping(value = "/get", produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     public ResponseEntity<List<User>> getUser() {
-        List<User> result = new ArrayList<User>();
-        for (User i : db.values()) {
-            result.add(i);
-        }
+        List<User> result = service.getUsers();
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping(value = "/get/{id}", produces = "application/json")
+    @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<User> getDetailUser(@PathVariable int id) {
-        User result = db.get(id);
+        User result = service.getUser(id);
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping(value = "/create", produces = "application/json")
-    public ResponseEntity<String> addUser(@RequestBody User request) {
-        db.put(request.getId(), request);
-        return ResponseEntity.ok("created!");
+    @PostMapping(value = "", produces = "application/json")
+    public ResponseEntity<User> addUser(@RequestBody User request) {
+        User result = service.createUser(request);
+        return ResponseEntity.ok(result);
     }
 
-    @PutMapping(value = "/update/{id}", produces = "application/json")
-    public ResponseEntity<String> updateUser(@PathVariable int id, @RequestBody User request) {
-        Boolean isExist = db.containsKey(id);
-        if (!isExist) {
-            return ResponseEntity.ok("data not found");
-        }
-        User currentData = db.get(id);
-        currentData.setName(request.getName());
-        currentData.setNim(request.getNim());
-        currentData.setProdi(request.getProdi());
-        db.put(currentData.getId(), currentData);
-        return ResponseEntity.ok("updated!");
+    @PatchMapping(value = "/{id}", produces = "application/json")
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody UpdateUserRequest request) {
+        User result = service.updateUser(id, request);
+        return ResponseEntity.ok(result);
     }
 
-    @DeleteMapping(value = "/delete/{id}", produces = "application/json")
+    @DeleteMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<String> deleteUser(@PathVariable int id) {
-        db.remove(id);
+        boolean result = service.deleteUser(id);
+        if (!result) return ResponseEntity.ok("invalid id!");
+
         return ResponseEntity.ok("deleted!");
     }
 
